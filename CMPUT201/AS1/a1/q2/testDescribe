@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#If no command line argument is given for the test set file print a usage message to stderr
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0: warning: no test set file" >&2
+    exit 1
+fi
+
+#get file path
+test_set_file="$1"
+
+#check the file
+if [ ! -f "$test_set_file" ]; then
+    echo "'$test_set_file': No test description" >&2
+    exit 1
+fi
+
+#read line by line
+while read -r stem; do
+    #check code
+    if [ -f "${stem}.desc" ]; then
+        cat "${stem}.desc"
+    else
+        echo "${stem}: No test description"
+    fi
+    
+done < "$test_set_file"
