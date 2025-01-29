@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# If no command line argument is given for the test set file, print a usage message to stderr
+if [ "$#" -ne 2 ]; then
+    echo "$0: warning: no test set file" >&2
+    exit 1
+fi
+
+#get file path
+command=$1
+test_set_file="$2"
+
+#check the file
+if [ ! -f "$test_set_file" ]; then
+    echo "'$test_set_file': No test description" >&2
+    exit 1
+fi
+
+#read line by line
+while read -r stem; do
+    if [ ! -f "$stem.in" ]; then
+        echo "$stem: no input file" >&2
+        continue
+    fi
+
+    # Check if the args file exists
+    if [ ! -f "$stem.args" ]; then
+        echo "$stem: no args file" >&2
+        continue
+    fi
+
+    # Read arguments from the args file
+    args=$(cat "$stem.args")
+
+    # Create a temporary output file
+    temp_output=$(mktemp)
+    if [ ! -f "$temp_output" ]; then
+        echo "fail" >&2
+        exit 1
+    fi
+
+    # Run the command with input redirection and arguments
+    $command $args < "$stem.in" > "$temp_output"
+
+    # If the .out file does not exist, create it using the current output
+    if [ ! -f "$stem.out" ]; then
+        cp "$temp_output" "$stem.out"
+    fi
+
+    #use diff to compare
+    if diff -q "$temp_output" "$stem.out" > /dev/null; then
+        echo "Test $stem passed"
+    else
+        echo "Test $stem failed"
+        echo "Expected output:"
+        cat "$stem.out"
+        echo "Actual output:"
+        cat "$temp_output"
+    fi
+
+    # Delete the temporary output file
+    rm -f "$temp_output"
+done < "$test_set_file"
+

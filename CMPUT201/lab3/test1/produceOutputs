@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#check 2 arguements
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <executable> <test_set_file>"
+    exit 1
+fi
+
+#get argue
+command="$1"
+test_set_file="$2"
+
+
+#check file
+if [ ! -f "$test_set_file" ]; then
+    echo "Error: no'$test_set_file'"
+    exit 1
+fi
+
+#read file
+while read -r stem; do
+    #check in
+    if [ ! -f "$stem.in" ]; then
+        echo "Warning: no $stem.in" >&2
+        continue
+    fi
+
+    #checi args
+    if [ ! -f "$stem.args" ]; then
+        echo "Warning: no $stem.args" >&2
+        continue
+    fi
+
+    #read argue
+    args=$(<"$stem.args")
+
+    #run command
+    "$command" $args < "$stem.in" > "$stem.out"
+
+done < "$test_set_file"
+

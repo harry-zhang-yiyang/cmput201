@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# If no command line argument is given for the test set file print a usage message to stderr
+if [ "$#" -ne 2 ]; then
+    echo "$0: warning: no test set file" >&2
+    exit 1
+fi
+
+#get file path
+command=$1
+test_set_file="$2"
+
+#check the file
+if [ ! -f "$test_set_file" ]; then
+    echo "'$test_set_file': No test description" >&2
+    exit 1
+fi
+
+#read line by line
+while read -r stem; do
+    if [ ! -f "$stem.in" ]; then
+        echo "$stem: no input file" >&2
+        continue
+    fi
+
+    #create temp output
+    temp_output=$(mktemp)
+    if [ ! -f "$temp_output" ]; then
+        echo "fail" >&2
+        exit 1
+    fi
+
+    #create output file
+    $command < "$stem.in" > "$temp_output"
+
+    #check output successfully produce
+    if [ ! -f "$stem.out" ]; then
+        echo "no output file."
+        continue
+    fi
+
+    #use diff to compare
+    if diff -q "$temp_output" "$stem.out" > /dev/null; then
+        echo "Test $stem passed"
+    else
+        echo "Test $stem failed"
+        echo "Expected output:"
+        cat "$stem.out"
+        echo "Actual output:"
+        cat "$temp_output"
+    fi
+
+    #delet temp
+    rm -f "$temp_output"
+done < "$test_set_file"
+
