@@ -24,7 +24,7 @@ while read -r stem; do
 
     #check args
     if [ -f "$stem.args" ]; then
-        args=$(<"$stem.args")
+        args=$(cat "$stem.args")
     else
         echo "Warning: no $stem.args" >&2
     fi
@@ -35,7 +35,7 @@ while read -r stem; do
     elif [ -n "$args" ]; then
         $command $args > "$stem.out"
     else
-        echo "Warning: no valid input for $stem" >&2
+        echo "no input $stem" >&2
     fi
 
 done < "$test_set_file"
