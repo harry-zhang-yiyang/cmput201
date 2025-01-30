@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#check 2 arguements
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <executable> <test_set_file>"
+    exit 1
+fi
+
+#get argue
+command="$1"
+test_set_file="$2"
+
+
+#read file
+while read -r stem; do
+
+
+    #read argue
+    args=$(<"$stem.args")
+
+    #run command
+    $command $args < "$stem.in" > "$stem.out"
+
+done < "$test_set_file"
+

@@ -2,7 +2,7 @@
 
 #check 2 arguements
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <executable> <test_set_file>"
+    echo "Usage: $0 no file"
     exit 1
 fi
 
@@ -19,23 +19,28 @@ fi
 
 #read file
 while read -r stem; do
-    #check in
     if [ ! -f "$stem.in" ]; then
-        echo "Warning: no $stem.in" >&2
+        echo "no '$stem.in' " >&2
         continue
     fi
+    
+    #intial args
+    args=""
 
-    #checi args
-    if [ ! -f "$stem.args" ]; then
-        echo "Warning: no $stem.args" >&2
-        continue
+    #check args
+    if [ -f "$stem.args" ]; then
+        args=$(cat "$stem.args")
+    else
+        echo "no $stem.args" >&2
     fi
 
-    #read argue
-    args=$(<"$stem.args")
-
-    #run command
-    "$command" $args < "$stem.in" > "$stem.out"
+    #check in
+    if [ -f "$stem.in" ]; then
+        $command $args < "$stem.in" > "$stem.out"
+    elif [ -n "$args" ]; then
+        $command $args > "$stem.out"
+    else
+        echo "no input $stem" >&2
+    fi
 
 done < "$test_set_file"
-
