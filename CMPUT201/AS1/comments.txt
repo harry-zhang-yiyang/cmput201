@@ -1,0 +1,14 @@
+Failed test case for ./graderFiles/test1 for question q2
+- Argument to script provided as absolute path
+- Stems in suite file are absolute paths
+- Several whitespace characters between each stem
+- Description files don't contain multiple spaces between them 
+Failed test case for ./graderFiles/absoluteProg for question q4
+- Provides absolute path to a command to test but suite file is local
+Failed test case for ./graderFiles/localProg for question q4
+- Tests a program that is provided as relative path to current working directory
+Failed test case for ./graderFiles/wcWithArgs for question q4
+- Tests wc with non empty .in files and .args files
+- Only uses the flags -l -w and -c
+Failed test case for ./graderFiles/wcWithFile for question q4
+- Provides both absolute and relative paths to files in its args file for wc
