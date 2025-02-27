@@ -1,13 +1,13 @@
 #include <stdio.h>
 
-int decimal_hamming_distance(unsigned int num1, unsigned int num2) {
+int decimal_hamming(unsigned int num1, unsigned int num2) {
     int count = 0;
 
     while (num1 > 0 && num2 > 0) {
-        if ((num1 % 10) != (num2 % 10)) {  // 取最后一位进行比较
+        if ((num1 % 10) != (num2 % 10)) {  //get the last number
             count++;
         }
-        num1 /= 10;  // 去掉最后一位
+        num1 /= 10;  //next number
         num2 /= 10;
     }
 
@@ -20,7 +20,7 @@ int main() {
     scanf("%u", &num1);
     scanf("%u", &num2);
 
-    int distance = decimal_hamming_distance(num1, num2);
+    int distance = decimal_hamming(num1, num2);
 
     printf("%d\n", distance);
     return 0;
