@@ -43,7 +43,6 @@ int main() {
             roman[i++] = c;
         }
     }
-    roman[i] = '\0'; // end
 
     // trans
     printf("%d\n", trans(roman));
