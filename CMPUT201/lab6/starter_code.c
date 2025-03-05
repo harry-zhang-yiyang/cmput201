@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
-void count(const char *codeword, const char *guess, int *bulls, int *cows) {
+int count(const char *codeword, const char *guess, int *bulls, int *cows) {
     int length = strlen(codeword);  //make sure wont over the length
     *bulls = 0;  //count bulls
     *cows = 0;  //count cows
@@ -27,6 +26,7 @@ void count(const char *codeword, const char *guess, int *bulls, int *cows) {
             }
         }
     }
+    return 0;
 }
 
 
