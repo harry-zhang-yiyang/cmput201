@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     while (attempts < 6) {
         scanf("%10s", guess);
         
-        if (strlen(guess) < strlen(codeword)) {
+        if (strlen(guess) != strlen(codeword)) {
                     printf("Error: length of guess must always match codeword\n");
                     printf("       Invalid Guess was \"%s\" and codeword is \"%s\"\n", guess, codeword);
                     return 0;
