@@ -38,7 +38,7 @@ int main() {
       scanf(" %c", &ch);
       if (ch == 'X' || ch == 'O') {
           matrix[i++] = ch;
-      }
+      } else continue;
   }
 
     for (int r = 0; r < row; r++) {
