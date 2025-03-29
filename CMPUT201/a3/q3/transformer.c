@@ -32,9 +32,14 @@ void s_image(int height, int width, int image[height][width][3]) {
             float g = (float)G;
             float b = (float)B;
 
-            int newR = (int)fmin(255, floor(r * 0.393 + g * 0.769 + b * 0.189));
-            int newG = (int)fmin(255, floor(r * 0.349 + g * 0.686 + b * 0.168));
-            int newB = (int)fmin(255, floor(r * 0.272 + g * 0.534 + b * 0.131));
+            int newR = (int)(r * 0.393f + g * 0.769f + b * 0.189f);
+            int newG = (int)(r * 0.349f + g * 0.686f + b * 0.168f);
+            int newB = (int)(r * 0.272f + g * 0.534f + b * 0.131f);
+
+            // 手动限制最大值为 255
+            if (newR > 255) newR = 255;
+            if (newG > 255) newG = 255;
+            if (newB > 255) newB = 255;
 
             image[i][j][0] = newR;
             image[i][j][1] = newG;
