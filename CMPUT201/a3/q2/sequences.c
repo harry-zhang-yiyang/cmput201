@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
 
     while (scanf("%s", input) != EOF) {
         if (strcmp(input, "n") == 0) {
-            // 在 main 里面直接做 apply 操作
             for (int i = 0; i < count; i++) {
                 if (strcmp(ops[i], "add") == 0) {
                     current += vals[i];

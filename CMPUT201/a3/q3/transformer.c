@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
         if (strcmp(argv[i], "-f") == 0) {
             fun_f = 1;
         }
-        if (strcmp(argv[i], "-f") == 0) {
+        if (strcmp(argv[i], "-s") == 0) {
             fun_s = 1;
         }
     }
