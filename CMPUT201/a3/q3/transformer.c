@@ -36,7 +36,6 @@ void s_image(int height, int width, int image[height][width][3]) {
             int newG = (int)(r * 0.349f + g * 0.686f + b * 0.168f);
             int newB = (int)(r * 0.272f + g * 0.534f + b * 0.131f);
 
-            // 手动限制最大值为 255
             if (newR > 255) newR = 255;
             if (newG > 255) newG = 255;
             if (newB > 255) newB = 255;
