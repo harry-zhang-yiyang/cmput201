@@ -24,21 +24,21 @@ void f_image(int height, int width, int image[height][width][3]) {
 void s_image(int height, int width, int image[height][width][3]) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            int r = image[i][j][0];
-            int g = image[i][j][1];
-            int b = image[i][j][2];
+            int R = image[i][j][0];
+            int G = image[i][j][1];
+            int B = image[i][j][2];
 
-            int new_r = r * 393 / 1000 + g * 769 / 1000 + b * 189 / 1000;
-            int new_g = r * 349 / 1000 + g * 686 / 1000 + b * 168 / 1000;
-            int new_b = r * 272 / 1000 + g * 534 / 1000 + b * 131 / 1000;
+            float r = (float)R;
+            float g = (float)G;
+            float b = (float)B;
 
-            if (new_r > 255) new_r = 255;
-            if (new_g > 255) new_g = 255;
-            if (new_b > 255) new_b = 255;
+            int newR = (int)fmin(255, floor(r * 0.393 + g * 0.769 + b * 0.189));
+            int newG = (int)fmin(255, floor(r * 0.349 + g * 0.686 + b * 0.168));
+            int newB = (int)fmin(255, floor(r * 0.272 + g * 0.534 + b * 0.131));
 
-            image[i][j][0] = new_r;
-            image[i][j][1] = new_g;
-            image[i][j][2] = new_b;
+            image[i][j][0] = newR;
+            image[i][j][1] = newG;
+            image[i][j][2] = newB;
         }
     }
 }
